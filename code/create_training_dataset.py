@@ -14,9 +14,7 @@ np.random.seed(1)
 lake_obs = load_lake_obs()
 
 #########################################################################################################
-states = lake_obs['state']
-names = lake_obs['lake_name']
-gcm_cell = lake_obs['driver_gcm_cell_no']
+# drop unnecessary columns
 lake_obs.drop(columns=['state','lake_name','driver_gcm_cell_no'], inplace=True)
 
 unique_sites = lake_obs.site_id.value_counts().index
