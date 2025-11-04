@@ -162,6 +162,22 @@ def load_full():
 
   return time_vars, space_vars, max_depth, dates, lonlat, sites
   
+def augment_for_proj(s, df):
+  df_temp = df[df.site_id == s].copy()
+  
+  df_temp['volume'] = df_temp['area'] * df_temp['max_depth']
+  df_temp['depth_area_ratio'] = df_temp['max_depth'] / df_temp['area']
+    
+  lagged_cols = []
+  for c in list(weather_cols):
+    for l in lags:
+      lagged_cols.append(df_temp.loc[:,c].shift(l).rename(f'{c}_{l}_lag'))
+    for r in rollings:
+      lagged_cols.append(df_temp.loc[:,c].shift(1).rolling(window=r).mean().rename(f'{c}_{r}_mean'))
+  
+  df_temp = pd.concat([df_temp] + lagged_cols, axis=1)
+  return df_temp.dropna()
+  
 
 @tf.keras.utils.register_keras_serializable() 
 class LakeTempLayerST(tf.keras.layers.Layer):
