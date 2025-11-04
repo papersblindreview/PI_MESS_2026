@@ -134,15 +134,10 @@ def load_full():
   dates = data['dates']
   lonlat = data['lonlat']
 
-  sites = []
-  for i in [f for f in os.listdir('../data/test/') if 'info' in f]:
-    with open('./data/test/' + i, 'rb') as f:
-      sites_temp = pickle.load(f) 
-    sites.append(sites_temp) 
-  
-  sites = np.concatenate(sites).reshape(-1,1)
+  with open('../data/full_data_info.pkl' + i, 'rb') as f:
+      sites = pickle.load(f) 
 
-  return time_vars, space_vars, max_depth, dates, lonlat, sites
+  return time_vars, space_vars, max_depth, dates, lonlat, np.array(sites).reshape(-1,1)
   
 def augment_for_proj(s, df):
   df_temp = df[df.site_id == s].copy()
