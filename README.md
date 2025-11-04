@@ -16,4 +16,4 @@
   
 3. **Train the PI-MESS model**
 
-   Run the `train_model.py` script. At the top of the script, the toggle ''suffix'' controls which type of model is trained: 'moe' for the PI-MESS model, 'pinn' for the PINN model, and 'npi' for the NN model. Default is PI-MESS. This will save the chosen model inside the `models` directory within the `code` directory.
+   Run the `train_model.py` script. At the top of the script, the toggle ''suffix'' controls which type of model is trained: 'MOE' for the PI-MESS model, 'PINN' for the PINN model, and 'NPI' for the NN model. Default is PI-MESS. This will save the chosen model inside the `models` directory within the `code` directory.
