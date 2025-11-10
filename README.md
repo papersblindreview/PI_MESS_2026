@@ -24,9 +24,11 @@ Supplemental codes for "A Spatiotemporal Physics-Informed State-Space Model of L
    - 'PINN' for the PINN model;
    - 'NPI' for the NN model.
      
-   Default is PI-MESS. This will save the chosen model inside the `models` directory within the `code` directory.
+   Default is PI-MESS. This will save the chosen model inside the `models` directory within the `code` directory. The figure below shows an illustration of the PI-MESS model architecture.
 
-5. **Generate predictions**
+   ![DAG](figures/F2_DAG.png)
+
+6. **Generate predictions**
 
    The model can be used to generate predictions over the contemporary period (up to 2022) or into the future. Climate projections (included in the data release) are available 2041-2059 and 2080-2099.
    - Run `predict_contemporary.py` for contemporary period predictions;
@@ -34,9 +36,9 @@ Supplemental codes for "A Spatiotemporal Physics-Informed State-Space Model of L
 
   The figures below show predictions and projections for Lake Mendota, WI. In the predictions figure we show results from a General Lake Model (GLM), as described by [Hipsey et al. (2019)](#references), for comparison purposes with PI-MESS, .
   
-   ![Pred Mendota](figures/F2_pred_mendota.png)
+   ![Pred Mendota](figures/F3_pred_mendota.png)
 
-   ![Proj Mendota](figures/F3_proj_mendota.png)
+   ![Proj Mendota](figures/F4_proj_mendota.png)
 
 ## References
 
