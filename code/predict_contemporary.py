@@ -14,8 +14,8 @@ datasets, _ = split_data(time_vars, space_vars, depth, max_depth, temperature, y
 
 with tf.device('/GPU:0'):
 
-  model = tf.keras.saving.load_model(f'./model_results/model_{suffix}.keras', safe_mode=False)
-  if 'moe' in suffix:
+  model = tf.keras.saving.load_model(f'./models/model_{suffix}.keras', safe_mode=False)
+  if suffix == 'MOE':
     weight_model = tf.keras.Model(model.inputs, model.get_layer("Weight").output)
     pars_model = tf.keras.Model(model.inputs, model.get_layer("Parameters").output)
     ml_model = tf.keras.Model(model.inputs, model.get_layer("ML_Temperature").output)
@@ -40,21 +40,18 @@ with tf.device('/GPU:0'):
                    tf.TensorSpec(shape=[None,space_vars.shape[1]], dtype=tf.float32),
                    tf.TensorSpec(shape=[None,1], dtype=tf.float32),
                    tf.TensorSpec(shape=[None,1], dtype=tf.float32))
+
+  @tf.function(input_signature=signature_full)
+  def predict_full_location(features_time_temp, features_space_temp, depth_temp, max_depth_temp):
+    return model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
                    
   @tf.function(input_signature=signature_full)
   def predict_full_location_pars(features_time_temp, features_space_temp, depth_temp, max_depth_temp):
-    
     preds_ml = ml_model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
     preds_pi = pi_model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
     weight_new = weight_model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
     pars_new = pars_model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
-    
-    return preds_ml, preds_pi, weight_new, pars_new
-    
-  @tf.function(input_signature=signature_full)
-  def predict_full_location(features_time_temp, features_space_temp, depth_temp, max_depth_temp):
-    return model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
-    
+    return preds_ml, preds_pi, weight_new, pars_new    
      
 
 time_val, space_val = datasets['X_val'][0], datasets['X_val'][1] 
