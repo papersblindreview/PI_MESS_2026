@@ -6,8 +6,7 @@ Supplemental codes for "A Spatiotemporal Physics-Informed State-Space Model of L
 
 1. **Download the data**
 
-   All required datasets can be obtained from the [USGS ScienceBase repository](#references):  
-   [https://www.sciencebase.gov/catalog/item/6206d3c2d34ec05caca53071](https://www.sciencebase.gov/catalog/item/6206d3c2d34ec05caca53071). The figure below shows the spatial distribution of lakes as well as two representative lakes (one deep and one shallow).
+   All required datasets can be obtained from the [USGS ScienceBase repository](#references). The figure below shows the spatial distribution of lakes as well as two representative lakes (one deep and one shallow).
    
    ![Project Diagram](figures/F1_descriptive.png)
 
