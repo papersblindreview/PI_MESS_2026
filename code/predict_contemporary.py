@@ -5,15 +5,7 @@ from datetime import datetime, timedelta
 from functions import *
 import gc
 
-row_number = int(os.getenv('SGE_TASK_ID'))
-job_name = os.getenv('JOB_NAME')
-
-if 'pinn' in job_name:
-  suffix = 'PINN'
-elif 'moe' in job_name:
-  suffix = 'MOE'
-else:
-  suffix = 'NPI'
+suffix = 'MOE' #'PINN', 'NPI'
   
 model_config = get_model_config('cases_st.txt', row_number)
 
@@ -22,7 +14,7 @@ datasets, _ = split_data(time_vars, space_vars, depth, max_depth, temperature, y
 
 with tf.device('/GPU:0'):
 
-  model = tf.keras.saving.load_model(f'./model_results/model_{suffix}_{row_number:02d}.keras', safe_mode=False)
+  model = tf.keras.saving.load_model(f'./model_results/model_{suffix}.keras', safe_mode=False)
   if 'moe' in suffix:
     weight_model = tf.keras.Model(model.inputs, model.get_layer("Weight").output)
     pars_model = tf.keras.Model(model.inputs, model.get_layer("Parameters").output)
