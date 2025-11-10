@@ -53,14 +53,8 @@ with tf.device('/GPU:0'):
     pars_new = pars_model([features_time_temp, features_space_temp, depth_temp, max_depth_temp], training=False)
     return preds_ml, preds_pi, weight_new, pars_new    
      
-
 time_val, space_val = datasets['X_val'][0], datasets['X_val'][1] 
 depth_val, max_depth_val, temp_val = datasets['X_val'][2], datasets['X_val'][3], datasets['y_val'] 
-
-preds_val = model.predict([time_val, space_val, depth_val, max_depth_val], verbose=0)
-res = preds_val - temp_val
-np.savez(f'./model_results/residuals_{suffix}_{row_number:02d}.npz', res = res)
-
 
 unique_locs_val = np.unique(space_val[:,:2], axis=0)
 
@@ -72,7 +66,6 @@ temp_val_tf = tf.constant(temp_val, dtype=tf.float32)
   
 mse = []
 mse_by_lake = []
-res = []
 for loc in unique_locs_val:
   mask = tf.reduce_all(tf.equal(space_val_tf[:, :2], tf.constant(loc, dtype=tf.float32)), axis=1)
     
@@ -101,7 +94,6 @@ print(f'Overall MSE: {mse_tot:.2f}')
 print(f'Lake-wise. Median: {mse_med:.2f}. IQR: ({mse_q1:.2f}, {mse_q2:.2f})')
 
 features_time, features_space, max_depth, dates, lonlat, sites = load_full()
-
 
 features_time_tf = tf.constant(features_time, dtype=tf.float32)
 features_space_tf = tf.constant(features_space, dtype=tf.float32)
