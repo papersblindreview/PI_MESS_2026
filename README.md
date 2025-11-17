@@ -34,7 +34,7 @@
 
   The figures below show predictions and projections for Lake Mendota, WI. In the predictions figure we show results from a General Lake Model (GLM), as described by [Hipsey et al. (2019)](#references), for comparison purposes with PI-MESS.
   
-   ![Pred Mendota](figures/F3_pred_mendota.png)
+   ![Pred Mendota](figures/F3_predictions_mendota.png)
 
    ![Proj Mendota](figures/F4_proj_mendota.png)
 
